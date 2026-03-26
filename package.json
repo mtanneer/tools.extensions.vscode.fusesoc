@@ -3,7 +3,7 @@
   "displayName": "FuseSoC",
   "description": "FuseSoC .core file support: syntax highlighting, linting, and validation",
   "version": "0.1.0",
-  "publisher": "tools-extensions",
+  "publisher": "Manas-Tanneeru",
   "repository": {
     "type": "git",
     "url": "https://github.com/tools-extensions/vscode-fusesoc"
