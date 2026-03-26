@@ -1,12 +1,14 @@
 {
-  "name": "fusesoc",
-  "displayName": "FuseSoC",
+  "name": "fusesoc-editor-support",
+  "displayName": "FuseSoC Editor Support",
   "description": "FuseSoC .core file support: syntax highlighting, linting, and validation",
   "version": "0.1.0",
+  "icon": "icons/logo.png",
   "publisher": "Manas-Tanneeru",
+  "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/tools-extensions/vscode-fusesoc"
+    "url": "https://github.com/mtanneer/tools.extensions.vscode.fusesoc"
   },
   "engines": {
     "vscode": "^1.96.0"

@@ -1,4 +1,4 @@
-# FuseSoC for VS Code
+# FuseSoC Editor Support
 
 VS Code language support for [FuseSoC](https://fusesoc.readthedocs.io/) core description files (`.core`).
 

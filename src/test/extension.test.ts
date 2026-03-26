@@ -3,8 +3,8 @@ import * as vscode from 'vscode';
 
 suite('Extension activation', () => {
   test('extension activates without throwing', async () => {
-    const ext = vscode.extensions.getExtension('tools-extensions.fusesoc');
-    assert.ok(ext, 'Extension "tools-extensions.fusesoc" not found. Check publisher in package.json.');
+    const ext = vscode.extensions.getExtension('Manas-Tanneeru.fusesoc-editor-support');
+    assert.ok(ext, 'Extension "Manas-Tanneeru.fusesoc-editor-support" not found. Check publisher in package.json.');
     if (!ext.isActive) {
       await ext.activate();
     }
