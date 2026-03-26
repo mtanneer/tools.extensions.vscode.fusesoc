@@ -1,0 +1,54 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "FuseSoC Injection",
+  "scopeName": "source.fusesoc.injection",
+  "injectionSelector": "source.fusesoc -comment",
+  "patterns": [
+    { "include": "#toplevel-keys" },
+    { "include": "#file-types" },
+    { "include": "#param-types" },
+    { "include": "#data-types" },
+    { "include": "#core-name" },
+    { "include": "#tool-backends" }
+  ],
+  "repository": {
+    "toplevel-keys": {
+      "match": "^(name|description|filesets|targets|parameters|generate|generators|provider|scripts|dependencies|virtual)\\s*(:)",
+      "captures": {
+        "1": { "name": "keyword.other.toplevel.fusesoc" },
+        "2": { "name": "punctuation.separator.key-value.yaml" }
+      }
+    },
+    "file-types": {
+      "match": "\\b(verilogSource(?:-(?:95|2001|2005))?|systemVerilogSource(?:-(?:3\\.1a?|2005|2012))?|vhdlSource(?:-(?:87|93|2008|2019))?|cSource|cppSource|systemCSource(?:-2\\.2)?|xciFile|xdcFile|sdfFile|tclFile|wavedromFile|pythonSource|user|SDC|PCF|QIP|IP|UCF|ngcFile|edifFile|qsf|PSS|memorymapFile)\\b",
+      "name": "support.constant.file-type.fusesoc"
+    },
+    "param-types": {
+      "match": "(?<=paramtype\\s*:\\s*)\\b(vlogparam|vlogdefine|generic|cmdlinearg|plusarg)\\b",
+      "name": "support.constant.param-type.fusesoc"
+    },
+    "data-types": {
+      "match": "(?<=datatype\\s*:\\s*)\\b(bool|file|int|str|real)\\b",
+      "name": "support.type.param-datatype.fusesoc"
+    },
+    "core-name": {
+      "comment": "Matches vendor:library:name or vendor:library:name:version",
+      "match": "(?<=^name\\s*:\\s*)([\\w][\\w.-]*)(:)([\\w][\\w.-]*)(:)([\\w][\\w.-]*)(?:(:)([\\w][\\w.+-]*))?",
+      "captures": {
+        "1": { "name": "entity.name.vendor.fusesoc" },
+        "2": { "name": "punctuation.separator.namespace.fusesoc" },
+        "3": { "name": "entity.name.library.fusesoc" },
+        "4": { "name": "punctuation.separator.namespace.fusesoc" },
+        "5": { "name": "entity.name.core.fusesoc" },
+        "6": { "name": "punctuation.separator.namespace.fusesoc" },
+        "7": { "name": "entity.name.version.fusesoc" }
+      }
+    },
+    "tool-backends": {
+      "match": "(?<=^\\s{4,})(icarus|modelsim|questa|xsim|vcs|ghdl|rivierapro|activehdl|aldec|vivado|quartus|diamond|icecube2|symbiflow|nextpnr|yosys|openfpgaloader)\\s*:",
+      "captures": {
+        "1": { "name": "support.class.tool-backend.fusesoc" }
+      }
+    }
+  }
+}

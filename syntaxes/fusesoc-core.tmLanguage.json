@@ -1,0 +1,22 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "FuseSoC Core",
+  "scopeName": "source.fusesoc",
+  "fileTypes": ["core"],
+  "firstLineMatch": "^CAPI=[12]:",
+  "patterns": [
+    { "include": "#capi-header" },
+    { "include": "source.yaml" }
+  ],
+  "repository": {
+    "capi-header": {
+      "match": "^(CAPI)(=)([12])(:).*$",
+      "captures": {
+        "1": { "name": "keyword.other.capi.fusesoc" },
+        "2": { "name": "punctuation.separator.capi.fusesoc" },
+        "3": { "name": "constant.numeric.capi-version.fusesoc" },
+        "4": { "name": "punctuation.separator.capi.fusesoc" }
+      }
+    }
+  }
+}
