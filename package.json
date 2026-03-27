@@ -2,8 +2,7 @@
   "name": "fusesoc-editor-support",
   "displayName": "FuseSoC Editor Support",
   "description": "FuseSoC .core file support: syntax highlighting, linting, and validation",
-  "version": "0.1.0",
-  "icon": "icons/logo.png",
+  "version": "0.2.1",
   "publisher": "Manas-Tanneeru",
   "license": "MIT",
   "repository": {
@@ -41,10 +40,6 @@
         "filenames": [
           "fusesoc.conf"
         ],
-        "icon": {
-          "light": "./icons/fusesoc-light.svg",
-          "dark": "./icons/fusesoc-dark.svg"
-        },
         "configuration": "./language-configuration.json"
       }
     ],
