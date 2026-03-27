@@ -13,7 +13,7 @@
   ],
   "repository": {
     "toplevel-keys": {
-      "match": "^(name|description|filesets|targets|parameters|generate|generators|provider|scripts|dependencies|virtual)\\s*(:)",
+      "match": "^(name|description|filesets|targets|parameters|generate|generators|provider|scripts|dependencies|virtual|packages)\\s*(:)",
       "captures": {
         "1": { "name": "keyword.other.toplevel.fusesoc" },
         "2": { "name": "punctuation.separator.key-value.yaml" }

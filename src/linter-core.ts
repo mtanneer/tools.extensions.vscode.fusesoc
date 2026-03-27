@@ -48,7 +48,7 @@ export const VALID_DATA_TYPES = new Set([
 
 export const KNOWN_TOPLEVEL_KEYS = new Set([
   'name', 'description', 'filesets', 'targets', 'parameters',
-  'generate', 'generators', 'provider', 'scripts', 'dependencies', 'virtual',
+  'generate', 'generators', 'provider', 'scripts', 'dependencies', 'virtual', 'packages',
 ]);
 
 export const KNOWN_FILESET_KEYS = new Set([
