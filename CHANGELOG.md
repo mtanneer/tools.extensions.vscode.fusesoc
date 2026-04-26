@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.3.1] - 2026-04-26
+
+### Added
+- Extension icon (FuseSoC logo)
+
 ## [0.3.0] - 2026-03-26
 
 ### Fixed
