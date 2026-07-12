@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.4.0] - 2026-07-12
+
+### Added
+- Linter now warns when a file listed under a fileset's `files:` does not exist relative to the `.core` file's directory.
+
 ## [0.3.1] - 2026-04-26
 
 ### Added

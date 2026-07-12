@@ -537,3 +537,28 @@ suite('Position accuracy', () => {
     assert.strictEqual(issues.length, 0, `Expected 0 issues, got:\n${issues.map(i => `  [${i.line}] ${i.message}`).join('\n')}`);
   });
 });
+
+suite('file existence check', () => {
+  const CORE = `CAPI=2:
+
+name: vendor:mylib:mycore:1.0.0
+
+filesets:
+  rtl:
+    files:
+      - src/exists.sv
+      - src/missing.sv
+`;
+
+  test('warns only for missing files when fileExists + baseDir given', () => {
+    const fileExists = (p: string) => p.endsWith('exists.sv');
+    const issues = lintText(CORE, fileExists, '/proj');
+    assert.ok(hasMessage(issues, 'File "src/missing.sv" in fileset "rtl" does not exist.'));
+    assert.ok(!hasMessage(issues, 'src/exists.sv'));
+  });
+
+  test('no check performed when fileExists/baseDir omitted', () => {
+    const issues = lintText(CORE);
+    assert.ok(!hasMessage(issues, 'does not exist'));
+  });
+});

@@ -1,4 +1,6 @@
 import * as vscode from 'vscode';
+import * as fs from 'fs';
+import * as path from 'path';
 import { lintText, IssueSeverity } from './linter-core.js';
 
 const severityMap: Record<IssueSeverity, vscode.DiagnosticSeverity> = {
@@ -10,7 +12,8 @@ const severityMap: Record<IssueSeverity, vscode.DiagnosticSeverity> = {
 
 export class CoreLinter {
   lint(document: vscode.TextDocument): vscode.Diagnostic[] {
-    return lintText(document.getText()).map(issue =>
+    const baseDir = document.uri.scheme === 'file' ? path.dirname(document.uri.fsPath) : undefined;
+    return lintText(document.getText(), fs.existsSync, baseDir).map(issue =>
       new vscode.Diagnostic(
         new vscode.Range(issue.line, issue.startChar, issue.endLine, issue.endChar),
         issue.message,

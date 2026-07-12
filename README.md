@@ -1,5 +1,8 @@
 # FuseSoC Editor Support
 
+[![Version](https://img.shields.io/github/package-json/v/mtanneer/tools.extensions.vscode.fusesoc)](https://github.com/mtanneer/tools.extensions.vscode.fusesoc/releases)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 VS Code language support for [FuseSoC](https://fusesoc.readthedocs.io/) core description files (`.core`).
 
 ## Features
@@ -74,7 +77,6 @@ No external tools required. The extension works purely from file content.
 ## Known Limitations
 
 - CAPI=1 (INI-format) files are detected but only receive a deprecation notice.
-- File existence is not checked (paths inside `files:` lists are not validated against the workspace).
 
 ## Contributing
 
