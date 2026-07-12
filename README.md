@@ -1,5 +1,6 @@
 # FuseSoC Editor Support
 
+[![CI](https://github.com/mtanneer/tools.extensions.vscode.fusesoc/actions/workflows/ci.yml/badge.svg)](https://github.com/mtanneer/tools.extensions.vscode.fusesoc/actions/workflows/ci.yml)
 [![Version](https://img.shields.io/github/package-json/v/mtanneer/tools.extensions.vscode.fusesoc)](https://github.com/mtanneer/tools.extensions.vscode.fusesoc/releases)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
