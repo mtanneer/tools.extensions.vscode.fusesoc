@@ -10,3 +10,5 @@ out/test/**
 **/*.ts
 node_modules/**
 *.vsix
+.claude/**
+test.core

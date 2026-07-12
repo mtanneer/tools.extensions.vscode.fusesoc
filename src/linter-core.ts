@@ -109,7 +109,11 @@ function findValueLine(lines: string[], value: string, afterLine = 0): number {
 
 // ─── Main entry point ─────────────────────────────────────────────────────────
 
-export function lintText(text: string): LintIssue[] {
+export interface FileExistsChecker {
+  (path: string): boolean;
+}
+
+export function lintText(text: string, fileExists?: FileExistsChecker, baseDir?: string): LintIssue[] {
   // Lazy-require js-yaml to keep this module importable in plain Node (tests)
   // eslint-disable-next-line @typescript-eslint/no-require-imports
   const yaml = require('js-yaml') as typeof import('js-yaml');
@@ -178,7 +182,7 @@ export function lintText(text: string): LintIssue[] {
     return issues;
   }
 
-  lintCAPI2(doc as Record<string, unknown>, lines, issues);
+  lintCAPI2(doc as Record<string, unknown>, lines, issues, fileExists, baseDir);
   return issues;
 }
 
@@ -187,7 +191,9 @@ export function lintText(text: string): LintIssue[] {
 function lintCAPI2(
   doc: Record<string, unknown>,
   lines: string[],
-  issues: LintIssue[]
+  issues: LintIssue[],
+  fileExists?: FileExistsChecker,
+  baseDir?: string
 ): void {
   // Unknown top-level keys
   for (const key of Object.keys(doc)) {
@@ -207,7 +213,7 @@ function lintCAPI2(
   }
 
   if ('filesets' in doc) {
-    lintFilesets(doc.filesets, lines, issues);
+    lintFilesets(doc.filesets, lines, issues, fileExists, baseDir);
   }
 
   if ('targets' in doc) {
@@ -254,7 +260,9 @@ function lintCoreName(name: string, lines: string[], issues: LintIssue[]): void 
 function lintFilesets(
   filesets: unknown,
   lines: string[],
-  issues: LintIssue[]
+  issues: LintIssue[],
+  fileExists?: FileExistsChecker,
+  baseDir?: string
 ): void {
   const fsLine = findKeyLine(lines, 'filesets');
   if (!isStringRecord(filesets)) {
@@ -263,7 +271,7 @@ function lintFilesets(
   }
   for (const [fsName, fs] of Object.entries(filesets)) {
     const fsStartLine = findKeyLine(lines, fsName, fsLine);
-    lintSingleFileset(fsName, fs, lines, fsStartLine, issues);
+    lintSingleFileset(fsName, fs, lines, fsStartLine, issues, fileExists, baseDir);
   }
 }
 
@@ -272,7 +280,9 @@ function lintSingleFileset(
   fs: unknown,
   lines: string[],
   startLine: number,
-  issues: LintIssue[]
+  issues: LintIssue[],
+  fileExists?: FileExistsChecker,
+  baseDir?: string
 ): void {
   if (!isStringRecord(fs)) {
     issues.push(makeIssue(lines, startLine,
@@ -292,6 +302,20 @@ function lintSingleFileset(
     const line = findKeyLine(lines, 'files', startLine);
     issues.push(makeIssue(lines, line,
       `"files" in fileset "${name}" must be a list.`, IssueSeverity.Error));
+  } else if ('files' in fs && Array.isArray(fs.files) && fileExists && baseDir) {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const path = require('path') as typeof import('path');
+    for (const entry of fs.files) {
+      const filePath = typeof entry === 'string' ? entry
+        : isStringRecord(entry) && typeof entry.name === 'string' ? entry.name
+        : undefined;
+      if (!filePath) continue;
+      if (!fileExists(path.join(baseDir, filePath))) {
+        const line = findValueLine(lines, filePath, startLine);
+        issues.push(makeIssue(lines, line,
+          `File "${filePath}" in fileset "${name}" does not exist.`, IssueSeverity.Warning));
+      }
+    }
   }
 
   if ('file_type' in fs && fs.file_type !== null) {
