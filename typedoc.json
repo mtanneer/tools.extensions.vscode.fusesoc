@@ -1,0 +1,8 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "entryPoints": ["src/linter-core.ts", "src/linter.ts", "src/extension.ts"],
+  "out": "docs-site",
+  "name": "FuseSoC Editor Support",
+  "excludePrivate": true,
+  "readme": "README.md"
+}

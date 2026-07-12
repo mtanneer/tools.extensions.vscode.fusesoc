@@ -71,7 +71,8 @@
     "package": "vsce package",
     "publish:vsce": "vsce publish",
     "publish:ovsx": "ovsx publish",
-    "lint": "eslint src"
+    "lint": "eslint src",
+    "docs": "typedoc"
   },
   "devDependencies": {
     "@types/js-yaml": "^4.0.9",
@@ -83,6 +84,7 @@
     "@vscode/test-electron": "^2.4.0",
     "@vscode/vsce": "^3.7.1",
     "eslint": "^9.0.0",
+    "typedoc": "^0.28.20",
     "typescript": "^5.5.0"
   },
   "dependencies": {

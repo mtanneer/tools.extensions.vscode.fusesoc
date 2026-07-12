@@ -1,5 +1,6 @@
 out/
 node_modules/
+docs-site/
 *.vsix
 .DS_Store
 *.core
