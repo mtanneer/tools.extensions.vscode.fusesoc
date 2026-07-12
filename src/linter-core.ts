@@ -1,5 +1,6 @@
 // ─── Types ────────────────────────────────────────────────────────────────────
 
+/** Diagnostic severity for a {@link LintIssue}, mirrors `vscode.DiagnosticSeverity` ordering. */
 export const enum IssueSeverity {
   Error       = 0,
   Warning     = 1,
@@ -7,6 +8,7 @@ export const enum IssueSeverity {
   Hint        = 3,
 }
 
+/** A single lint finding, positioned by 0-based line/char offsets into the source text. */
 export interface LintIssue {
   line: number;       // 0-based
   startChar: number;
@@ -18,6 +20,7 @@ export interface LintIssue {
 
 // ─── Valid value sets ──────────────────────────────────────────────────────────
 
+/** Fileset `file_type` values accepted without a warning. */
 export const VALID_FILE_TYPES = new Set([
   // Verilog
   'verilogSource', 'verilogSource-95', 'verilogSource-2001', 'verilogSource-2005',
@@ -38,29 +41,35 @@ export const VALID_FILE_TYPES = new Set([
   'user',
 ]);
 
+/** Parameter `paramtype` values accepted without a warning. */
 export const VALID_PARAM_TYPES = new Set([
   'vlogparam', 'vlogdefine', 'generic', 'cmdlinearg', 'plusarg',
 ]);
 
+/** Parameter `datatype` values accepted without a warning. */
 export const VALID_DATA_TYPES = new Set([
   'bool', 'file', 'int', 'str', 'real',
 ]);
 
+/** Keys allowed at the document root; anything else triggers an "unknown top-level key" warning. */
 export const KNOWN_TOPLEVEL_KEYS = new Set([
   'name', 'description', 'filesets', 'targets', 'parameters',
   'generate', 'generators', 'provider', 'scripts', 'dependencies', 'virtual', 'packages',
 ]);
 
+/** Keys allowed inside a `filesets.<name>` entry; anything else triggers an "unknown fileset key" warning. */
 export const KNOWN_FILESET_KEYS = new Set([
   'files', 'file_type', 'logical_name', 'depend', 'include_files',
   'gen_files', 'is_include_file',
 ]);
 
+/** Keys allowed inside a `targets.<name>` entry; anything else triggers an "unknown target key" warning. */
 export const KNOWN_TARGET_KEYS = new Set([
   'filesets', 'tools', 'toplevel', 'description', 'default_tool',
   'generate', 'parameters', 'vpi', 'hooks',
 ]);
 
+/** Keys allowed inside a `parameters.<name>` entry; anything else triggers an "unknown parameter key" warning. */
 export const KNOWN_PARAMETER_KEYS = new Set([
   'datatype', 'default', 'description', 'paramtype',
 ]);
@@ -109,10 +118,18 @@ function findValueLine(lines: string[], value: string, afterLine = 0): number {
 
 // ─── Main entry point ─────────────────────────────────────────────────────────
 
+/** Sync predicate used to check whether a referenced file exists, e.g. `fs.existsSync`. */
 export interface FileExistsChecker {
   (path: string): boolean;
 }
 
+/**
+ * Lints a FuseSoC `.core` file's text and returns all findings.
+ *
+ * `fileExists` and `baseDir` are both optional and only used to flag missing files
+ * referenced under `filesets.*.files`. Omit either one (e.g. in tests) and that check
+ * is skipped entirely — the function stays pure and performs no filesystem access.
+ */
 export function lintText(text: string, fileExists?: FileExistsChecker, baseDir?: string): LintIssue[] {
   // Lazy-require js-yaml to keep this module importable in plain Node (tests)
   // eslint-disable-next-line @typescript-eslint/no-require-imports

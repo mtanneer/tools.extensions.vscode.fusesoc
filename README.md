@@ -78,6 +78,15 @@ No external tools required. The extension works purely from file content.
 
 - CAPI=1 (INI-format) files are detected but only receive a deprecation notice.
 
+## Linter Architecture
+
+Linting is split across two modules:
+
+- `src/linter-core.ts` is pure logic with no `vscode` import, so it runs in plain Node and is unit-testable without the extension host. Its entry point is `lintText(text, fileExists?, baseDir?)`, which returns a `LintIssue[]`. `fileExists`/`baseDir` are optional and only used to check that files referenced under `filesets.*.files` exist on disk; omit them and that check is skipped, keeping the function pure.
+- `src/linter.ts` (`CoreLinter`) adapts that output for the editor: it calls `lintText` with `fs.existsSync` and the document's directory, then maps each `LintIssue` to a `vscode.Diagnostic` via `IssueSeverity` → `vscode.DiagnosticSeverity`.
+
+To add a new lint rule, write a `lint*` function following the existing pattern (e.g. `lintParameters`, `lintFilesets`) and call it from `lintCAPI2` (or the relevant parent check). Push findings with the `makeIssue` helper for whole-line positioning, or `findKeyLine`/`findValueLine` to locate a specific key or value's line number in the source text.
+
 ## Contributing
 
 Issues and pull requests welcome at the project repository.
