@@ -5,3 +5,4 @@ docs-site/
 .DS_Store
 *.core
 .vscode-test/
+.claude/
