@@ -6,15 +6,17 @@ on:
 
 permissions:
   contents: write
+  id-token: write
 
 jobs:
   publish:
     runs-on: ubuntu-latest
+    environment: release
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
       - run: npm ci
       - name: Tag must match package.json version
         run: |
@@ -23,9 +25,7 @@ jobs:
       - run: npm run compile
       - run: xvfb-run -a npm test
       - run: npx vsce package --out fusesoc-editor-support.vsix
-      - run: npx vsce publish --packagePath fusesoc-editor-support.vsix --pat "$VSCE_PAT"
-        env:
-          VSCE_PAT: ${{ secrets.VSCE_PAT }}
+      - run: npx vsce publish --packagePath fusesoc-editor-support.vsix --oidc
       - name: Attach vsix to GitHub release
         run: |
           gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1 || gh release create "$GITHUB_REF_NAME" --generate-notes
