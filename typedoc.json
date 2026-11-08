@@ -3,6 +3,9 @@
   "entryPoints": ["src/linter-core.ts", "src/linter.ts", "src/extension.ts"],
   "out": "docs-site",
   "name": "FuseSoC Editor Support",
+  "includeVersion": true,
   "excludePrivate": true,
-  "readme": "README.md"
+  "readme": "README.md",
+  "plugin": ["typedoc-material-theme"],
+  "themeColor": "#4a9eff"
 }
