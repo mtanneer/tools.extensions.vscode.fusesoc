@@ -1,9 +1,9 @@
 # Changelog
 
-## [1.0.0] - 2026-11-08
+## [0.5.0] - 2026-11-08
 
 ### Changed
-- First stable release. No functional changes to the extension.
+- No functional changes to the extension; dependency update (js-yaml 4.3.2) and docs only.
 - Releases now publish automatically: pushing a `v*` tag runs tests, packages the extension, publishes to the Visual Studio Marketplace via trusted publishing (no stored token), and attaches the `.vsix` to the GitHub release.
 - CI now verifies the extension packages on every pull request.
 
