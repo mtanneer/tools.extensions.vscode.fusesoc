@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.0] - 2026-11-08
+
+### Changed
+- First stable release. No functional changes to the extension.
+- Releases now publish automatically: pushing a `v*` tag runs tests, packages the extension, publishes to the Visual Studio Marketplace via trusted publishing (no stored token), and attaches the `.vsix` to the GitHub release.
+- CI now verifies the extension packages on every pull request.
+
 ## [0.4.0] - 2026-07-12
 
 ### Added
