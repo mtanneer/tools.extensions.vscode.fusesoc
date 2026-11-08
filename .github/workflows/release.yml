@@ -1,8 +1,11 @@
 name: Release
 
 on:
-  release:
-    types: [published]
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
 
 jobs:
   publish:
@@ -13,8 +16,19 @@ jobs:
         with:
           node-version: 20
       - run: npm ci
+      - name: Tag must match package.json version
+        run: |
+          v="v$(node -p "require('./package.json').version")"
+          [ "$v" = "$GITHUB_REF_NAME" ] || { echo "tag $GITHUB_REF_NAME != package.json $v"; exit 1; }
       - run: npm run compile
       - run: xvfb-run -a npm test
-      - run: npx vsce publish --pat "$VSCE_PAT"
+      - run: npx vsce package --out fusesoc-editor-support.vsix
+      - run: npx vsce publish --packagePath fusesoc-editor-support.vsix --pat "$VSCE_PAT"
         env:
           VSCE_PAT: ${{ secrets.VSCE_PAT }}
+      - name: Attach vsix to GitHub release
+        run: |
+          gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1 || gh release create "$GITHUB_REF_NAME" --generate-notes
+          gh release upload "$GITHUB_REF_NAME" fusesoc-editor-support.vsix --clobber
+        env:
+          GH_TOKEN: ${{ github.token }}
