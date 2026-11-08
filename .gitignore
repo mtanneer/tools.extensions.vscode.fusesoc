@@ -6,3 +6,4 @@ docs-site/
 *.core
 .vscode-test/
 .claude/
+tmp/
