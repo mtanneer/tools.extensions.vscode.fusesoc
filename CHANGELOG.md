@@ -2,6 +2,9 @@
 
 ## [0.5.0] - 2026-11-08
 
+### Fixed
+- Extension icon resized from 1254px to 512px; the Marketplace now rejects icons over 1024px.
+
 ### Changed
 - No functional changes to the extension; dependency update (js-yaml 4.3.2) and docs only.
 - Releases now publish automatically: pushing a `v*` tag runs tests, packages the extension, publishes to the Visual Studio Marketplace via trusted publishing (no stored token), and attaches the `.vsix` to the GitHub release.
