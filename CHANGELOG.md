@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.5.0] - 2026-11-08
+## [0.5.1] - 2026-11-09
 
 ### Fixed
 - Extension icon resized from 1254px to 512px; the Marketplace now rejects icons over 1024px.
