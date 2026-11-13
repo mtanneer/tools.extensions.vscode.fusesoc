@@ -11,6 +11,7 @@
     "url": "https://github.com/mtanneer/tools.extensions.vscode.fusesoc"
   },
   "engines": {
+    "node": ">=20",
     "vscode": "^1.96.0"
   },
   "categories": [

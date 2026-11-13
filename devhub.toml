@@ -1,0 +1,7 @@
+# devhub project manifest. Schema: ~/dev/tools.all.devhub/SCHEMA.md
+status = "active"
+purpose = "VS Code extension: syntax highlighting and linting for FuseSoC .core files"
+tags = ["hardware", "vscode"]
+deploy = "github releases (vsix), github pages docs"
+depends_on = []
+next = []
